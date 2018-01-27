@@ -28,16 +28,33 @@ def hello(name)
   "Hello, #{name}"
 end
 
+$CONS = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V',
+         'W', 'X', 'Y', 'Z']
+
 def starts_with_consonant? s
-  not ['A', 'E', 'I', 'O', 'U'].include? s[0].upcase
+  begin
+    $CONS.include? s[0].upcase
+  rescue NoMethodError
+    false
+  end
 end
 
 def binary_multiple_of_4? s
-  # YOUR CODE HERE
+  not s.empty? and (s =~ /[^01]/) == nil and s.to_i(2) % 4 == 0
 end
 
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
+  attr_accessor :isbn
+  attr_accessor :price
+  def initialize isbn, price
+    raise ArgumentError, 'isbn is empty' if isbn.empty?
+    raise ArgumentError, 'price is non-positive' if price <= 0
+    @isbn = isbn
+    @price = price
+  end
+  def price_as_string
+    "$%4.2f" % @price
+  end
 end
